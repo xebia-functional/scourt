@@ -321,7 +321,7 @@ object DefDefTransforms extends TreesChecks:
       val finalMethodReturnType: tpd.TypeTree =
         tpd.TypeTree(
           OrType(
-            OrType(ctx.definitions.AnyType, ctx.definitions.NullType, soft = false),
+            OrType(returnType, ctx.definitions.NullType, soft = false),
             suspendedState.symbol.namedType,
             soft = false)
         )
@@ -411,16 +411,29 @@ object DefDefTransforms extends TreesChecks:
       getReturnTypeBodyContextFunctionOwner(tree)
 
     val completion =
-      generateCompletion(parent, Types.OrType(methodReturnType, ctx.definitions.AnyType, false))
+      generateCompletion(parent, methodReturnType)
 
     val transformedMethodParams = params(tree, completion)
 
-    val transformedMethodSymbol =
+    val transformedMethodSymbol = {
+      val suspendedState =
+        ref(requiredModule("continuations.Continuation"))
+          .select(termName("State"))
+          .select(termName("Suspended"))
+
+      val finalMethodReturnType: tpd.TypeTree =
+        tpd.TypeTree(
+          OrType(
+            OrType(methodReturnType, ctx.definitions.NullType, soft = false),
+            suspendedState.symbol.namedType,
+            soft = false))
+
       createTransformedMethodSymbol(
         parent,
         transformedMethodParams,
-        removeSuspendReturnAny(methodReturnType)
+        removeSuspend(finalMethodReturnType.tpe)
       )
+    }
 
     deleteOldSymbol(parent)
 
