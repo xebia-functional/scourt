@@ -247,6 +247,9 @@ object DefDefTransforms extends TreesChecks:
     case xs => tpd.Block(xs.dropRight(1), xs.last)
   }
 
+  private def fieldMatchesParam(field: Symbol, param: Symbol)(using Context): Boolean =
+    field.name.show.dropRight(3) == param.name.show
+
   private def removeSuspend(typ: Type, returnValue: Option[Type => Type] = None)(
       using Context): Type =
     val types = flattenTypes(typ)

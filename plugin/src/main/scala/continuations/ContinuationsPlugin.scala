@@ -11,6 +11,7 @@ import dotty.tools.dotc.core.Names.{termName, typeName, Name}
 import dotty.tools.dotc.core.StdNames.{nme, tpnme}
 import dotty.tools.dotc.core.Symbols.*
 import dotty.tools.dotc.core.Types.{MethodType, OrType, PolyType}
+import dotty.tools.dotc.core.NameOps.*
 import dotty.tools.dotc.plugins.PluginPhase
 import dotty.tools.dotc.plugins.StandardPlugin
 import dotty.tools.dotc.transform.PickleQuotes
@@ -307,7 +308,7 @@ class ContinuationsCallsPhase extends PluginPhase:
               case (acc, _) => acc
             }
 
-          ref(existsTree(tree).get).appliedToTermArgs(paramsNonCF.flatten :+ paramss.last.head)
+          existsTree(tree).get.appliedToTermArgs(paramsNonCF.flatten :+ paramss.last.head)
       )
 
       val newStarterClass = ClassDefWithParents(
