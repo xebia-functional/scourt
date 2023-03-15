@@ -8,12 +8,13 @@ import dotty.tools.dotc.core.Constants.Constant
 import dotty.tools.dotc.core.Contexts.{ctx, Context}
 import dotty.tools.dotc.core.{Flags, Names, Scopes, Types}
 import dotty.tools.dotc.core.Names.{termName, typeName, Name}
-import dotty.tools.dotc.core.StdNames.nme
+import dotty.tools.dotc.core.StdNames.{nme, tpnme}
 import dotty.tools.dotc.core.Symbols.*
 import dotty.tools.dotc.core.Types.{MethodType, OrType, PolyType}
 import dotty.tools.dotc.plugins.PluginPhase
 import dotty.tools.dotc.plugins.StandardPlugin
-import dotty.tools.dotc.transform.{PickleQuotes, Staging}
+import dotty.tools.dotc.transform.PickleQuotes
+import dotty.tools.dotc.transform.Staging
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -75,7 +76,7 @@ class ContinuationsCallsPhase extends PluginPhase:
         var sym = Option.empty[Symbol]
         tree
           .find {
-            case t @ Select(Ident(_), n) if n.matchesTargetName(s.name) =>
+            case t @ Select(_, n) if n.matchesTargetName(s.name) =>
               sym = Option(t.symbol)
               true
             case t @ Ident(n) if n.matchesTargetName(s.name) =>
