@@ -8,48 +8,31 @@ ThisBuild / versionScheme := Some("early-semver")
 addCommandAlias(
   "plugin-example",
   "reload; clean; publishLocal; continuationsPluginExample/compile")
-addCommandAlias("ci-test", "scalafmtCheckAll; scalafmtSbtCheck; github; mdoc; root / test")
+addCommandAlias("ci-test", "scalafmtCheckAll; scalafmtSbtCheck; github; root / test")
 addCommandAlias("ci-it-test", "continuationsPlugin / IntegrationTest / test")
-addCommandAlias("ci-docs", "github; mdoc")
 addCommandAlias("ci-publish", "github; ci-release")
 
-publish / skip := true
+lazy val root =
+  (project in file("./"))
+    .settings(publish / skip := true)
+    .aggregate(continuationsPlugin, `munit-snap`)
 
-lazy val root = // I
-  (project in file("./")).aggregate(
-    benchmarks, // A
-    continuationsPlugin, // C
-    // continuationsPluginExample, // D
-    documentation, // E
-    `http-scala-fx`, // F
-    `java-net-multipart-body-publisher`, // G
-    `munit-scala-fx`, // H
-    `scala-fx`, // J
-    `scalike-jdbc-scala-fx`, // K
-    `sttp-scala-fx`, // L
-    // `zero-arguments-no-continuation-treeview`,
-    // `zero-arguments-one-continuation-code-before-used-after`,
-    // `list-map`,
-    // `two-arguments-two-continuations`,
-    `munit-snap`
+lazy val bypassZinc = (project in file("./bypassZinc"))
+  .settings(publish / skip := true)
+  .aggregate(
+    continuationsPluginExample,
+    `zero-arguments-no-continuation-treeview`,
+    `zero-arguments-one-continuation-code-before-used-after`,
+    `list-map`,
+    `two-arguments-two-continuations`
   )
-
-lazy val bypassZinc = (project in file("./bypassZinc")).aggregate(
-  continuationsPluginExample,
-  `zero-arguments-no-continuation-treeview`,
-  `zero-arguments-one-continuation-code-before-used-after`,
-  `list-map`,
-  `two-arguments-two-continuations`
-)
-
-lazy val `scala-fx` = project.settings(scalafxSettings: _*)
 
 lazy val continuationsPlugin = project
   .configs(IntegrationTest)
+  .dependsOn(`munit-snap`)
   .settings(
     continuationsPluginSettings: _*
   )
-  .dependsOn(`munit-snap`)
 
 lazy val continuationsPluginExample = project
   .dependsOn(continuationsPlugin)
@@ -81,54 +64,6 @@ lazy val `two-arguments-two-continuations` =
     .dependsOn(continuationsPlugin)
     .enablePlugins(ForceableCompilationPlugin)
 
-lazy val benchmarks =
-  project.dependsOn(`scala-fx`).settings(publish / skip := true).enablePlugins(JmhPlugin)
-
-lazy val documentation = project
-  .dependsOn(`scala-fx`)
-  .enablePlugins(MdocPlugin)
-  .settings(mdocOut := file("."))
-  .settings(publish / skip := true)
-
-lazy val `munit-scala-fx` = (project in file("./munit-scalafx"))
-  .configs(IntegrationTest)
-  .settings(
-    munitScalaFXSettings
-  )
-  .dependsOn(`scala-fx`)
-
-lazy val `cats-scala-fx` = (project in file("./cats-scalafx"))
-  .configs(IntegrationTest)
-  .settings(
-    catsScalaFXSettings
-  )
-  .dependsOn(`scala-fx`)
-
-lazy val `scalike-jdbc-scala-fx` = project
-  .dependsOn(`scala-fx`, `munit-scala-fx` % "test -> compile")
-  .settings(publish / skip := true)
-  .settings(scalalikeSettings)
-
-lazy val `java-net-multipart-body-publisher` =
-  (project in file("./java-net-mulitpart-body-publisher")).settings(commonSettings)
-
-lazy val `http-scala-fx` = (project in file("./http-scala-fx"))
-  .settings(httpScalaFXSettings)
-  .settings(generateMediaTypeSettings)
-  .dependsOn(
-    `java-net-multipart-body-publisher`,
-    `scala-fx`,
-    `munit-scala-fx` % "test -> compile")
-  .enablePlugins(HttpScalaFxPlugin)
-
-lazy val `sttp-scala-fx` = (project in file("./sttp-scala-fx"))
-  .settings(sttpScalaFXSettings)
-  .dependsOn(
-    `java-net-multipart-body-publisher`,
-    `scala-fx`,
-    `http-scala-fx`,
-    `munit-scala-fx` % "test -> compile")
-
 lazy val `munit-snap` = (project in file("./munit-snap")).settings(munitSnapSettings)
 
 lazy val munitSnapSettings = Seq(
@@ -147,16 +82,6 @@ lazy val commonSettings = Seq(
   Test / fork := true
 )
 
-lazy val scalafxSettings: Seq[Def.Setting[_]] =
-  Seq(
-    classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.Flat,
-    javaOptions ++= javaOptionsSettings,
-    autoAPIMappings := true,
-    libraryDependencies ++= Seq(
-      scalacheck % Test
-    )
-  )
-
 def testAndIntegrationTest(m: ModuleID): List[ModuleID] = List(m).flatMap { m =>
   List(m % Test, m % IntegrationTest)
 }
@@ -165,6 +90,7 @@ lazy val continuationsPluginSettings: Seq[Def.Setting[_]] =
   Defaults.itSettings ++ Seq(
     exportJars := true,
     autoAPIMappings := true,
+    publish / skip := true,
     Test / fork := true,
     libraryDependencies ++= List(
       "org.scala-lang" %% "scala3-compiler" % "3.1.2"
@@ -215,51 +141,18 @@ lazy val continuationsPluginExampleSettings: Seq[Def.Setting[_]] =
     Test / scalacOptions += s"-Xplugin:${(continuationsPlugin / Compile / packageBin).value}"
   )
 
-lazy val munitScalaFXSettings = Defaults.itSettings ++ Seq(
-  libraryDependencies ++= Seq(
-    munitScalacheck,
-    hedgehog,
-    junit,
-    munit,
-    junitInterface
-  )
-) ++ commonSettings
-
-lazy val catsScalaFXSettings = Seq(
-  classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.Flat,
-  javaOptions ++= javaOptionsSettings,
-  autoAPIMappings := true,
-  libraryDependencies ++= Seq(
-    catsEffect,
-    scalacheck % Test
-  )
-)
-
 lazy val scalalikeSettings: Seq[Def.Setting[_]] =
   Seq(
     classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.Flat,
     javaOptions ++= javaOptionsSettings,
     autoAPIMappings := true,
     libraryDependencies ++= Seq(
-      scalikejdbc,
-      h2Database,
       logback,
-      postgres,
       scalacheck % Test,
       testContainers % Test,
-      testContainersMunit % Test,
-      testContainersPostgres % Test,
-      flyway % Test
+      testContainersMunit % Test
     )
   )
-
-lazy val httpScalaFXSettings = commonSettings
-
-lazy val sttpScalaFXSettings = commonSettings ++ Seq(
-  libraryDependencies += sttp,
-  libraryDependencies += httpCore5,
-  libraryDependencies += hedgehog % Test
-)
 
 lazy val javaOptionsSettings = Seq(
   "-XX:+IgnoreUnrecognizedVMOptions",
