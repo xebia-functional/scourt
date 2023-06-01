@@ -15,11 +15,12 @@ addCommandAlias("ci-publish", "github; ci-release")
 lazy val root =
   (project in file("./"))
     .settings(publish / skip := true)
-    .aggregate(continuationsPlugin, `munit-snap`)
+    .aggregate(continuationsPlugin, `munit-snap`, core)
 
 lazy val bypassZinc = (project in file("./bypassZinc"))
   .settings(publish / skip := true)
   .aggregate(
+    core,
     continuationsPluginExample,
     `zero-arguments-no-continuation-treeview`,
     `zero-arguments-one-continuation-code-before-used-after`,
@@ -27,9 +28,15 @@ lazy val bypassZinc = (project in file("./bypassZinc"))
     `two-arguments-two-continuations`
   )
 
+lazy val core = project
+  .configs(IntegrationTest)
+  .settings(
+    continuationsPluginSettings: _*
+  )
+
 lazy val continuationsPlugin = project
   .configs(IntegrationTest)
-  .dependsOn(`munit-snap`)
+  .dependsOn(`munit-snap`, core)
   .settings(
     continuationsPluginSettings: _*
   )
