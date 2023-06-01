@@ -1,26 +1,23 @@
 package continuations {
   final lazy module val compileFromStringpackage: 
-    continuations.compileFromStringpackage
-   = new continuations.compileFromStringpackage()
+    continuations.compileFromStringpackage = 
+    new continuations.compileFromStringpackage()
   @SourceFile("compileFromStringscala") final module class 
-    compileFromStringpackage
-  () extends Object() { this: continuations.compileFromStringpackage.type =>
+    compileFromStringpackage() extends Object() { 
+    this: continuations.compileFromStringpackage.type =>
     private def writeReplace(): AnyRef = 
       new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
     def program: Int = 
       {
-        private class $foo$Frame($completion: continuations.Continuation[Any | Null]) extends continuations.jvm.internal.ContinuationImpl($completion
-          ,
-        $completion.context) {
+        private class $foo$Frame($completion: continuations.Continuation[Any | Null]) extends continuations.jvm.internal.ContinuationImpl(
+          $completion, $completion.context) {
           var $result: Either[Throwable, Any | Null | continuations.Continuation.State.Suspended.type] = _
           var $label: Int = _
           def $result_=(x$0: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Unit
-             = 
-          ()
+             = ()
           def $label_=(x$0: Int): Unit = ()
           protected override def invokeSuspend(
-            result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]
-          ): Any | Null = 
+            result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Any | Null = 
             {
               this.$result = result
               this.$label = this.$label.|(scala.Int.MinValue)
@@ -30,8 +27,7 @@ package continuations {
             new continuations.jvm.internal.BaseContinuationImpl(completion)
         }
         def foo(completion: continuations.Continuation[Int]): 
-          Int | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)
-         = 
+          Int | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State) = 
           {
             {
               val $continuation: $foo$Frame =

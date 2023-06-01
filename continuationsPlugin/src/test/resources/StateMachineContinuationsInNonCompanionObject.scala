@@ -6,8 +6,7 @@ package continuations {
     private[this] def method1(x: Int): Int = x.+(1)
     protected val z1: Int = 1
     private class $continuations$Frame($completion: continuations.Continuation[Any | Null]) extends continuations.jvm.internal.ContinuationImpl(
-      $completion
-    , $completion.context) {
+      $completion, $completion.context) {
       var I$0: Any = _
       var I$1: Any = _
       var I$2: Any = _
@@ -21,8 +20,7 @@ package continuations {
       def $result_=(x$0: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Unit = ()
       def $label_=(x$0: Int): Unit = ()
       protected override def invokeSuspend(
-        result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]
-      ): Any | Null =
+        result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Any | Null =
         {
           this.$result = result
           this.$label = this.$label.|(scala.Int.MinValue)
@@ -32,8 +30,7 @@ package continuations {
         new continuations.jvm.internal.BaseContinuationImpl(completion)
     }
     def continuations(x: Int, y: Int, completion: continuations.Continuation[Int]):
-      Int | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)
-     =
+      Int | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State) =
       {
         var x##1: Int = x
         var y##1: Int = y
@@ -68,8 +65,7 @@ package continuations {
                         val z4: Int = 1
                         def method4(x: Int): Int = x.+(1)
                         continuations.ExampleObject.method1(x##1).+(1).+(continuations.ExampleObject.z1).+(z2).+(method2(y##1)).+(z3).+(method3(x##1)
-                          )
-                        .+(z4).+(method4(x##1))
+                          ).+(z4).+(method4(x##1))
                       }
                     )
                   }
@@ -137,11 +133,11 @@ package continuations {
       }
   }
   final lazy module val compileFromStringpackage:
-    continuations.compileFromStringpackage
-   = new continuations.compileFromStringpackage()
+    continuations.compileFromStringpackage =
+    new continuations.compileFromStringpackage()
   @SourceFile("compileFromStringscala") final module class
-    compileFromStringpackage
-  () extends Object() { this: continuations.compileFromStringpackage.type =>
+    compileFromStringpackage() extends Object() {
+    this: continuations.compileFromStringpackage.type =>
     private def writeReplace(): AnyRef =
       new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
     def foo: Int = continuations.ExampleObject.continuations(1, 2)(continuations.Suspend.given_Suspend)

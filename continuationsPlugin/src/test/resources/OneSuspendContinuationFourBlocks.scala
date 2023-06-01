@@ -1,10 +1,10 @@
 package continuations {
   final lazy module val compileFromStringpackage: 
-    continuations.compileFromStringpackage
-   = new continuations.compileFromStringpackage()
+    continuations.compileFromStringpackage = 
+    new continuations.compileFromStringpackage()
   @SourceFile("compileFromStringscala") final module class 
-    compileFromStringpackage
-  () extends Object() { this: continuations.compileFromStringpackage.type =>
+    compileFromStringpackage() extends Object() { 
+    this: continuations.compileFromStringpackage.type =>
     private def writeReplace(): AnyRef = 
       new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
     def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
