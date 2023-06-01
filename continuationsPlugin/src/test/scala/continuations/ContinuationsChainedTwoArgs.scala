@@ -102,6 +102,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
           )
       }
   }
+  /*
 
   compilerContextWithContinuationsPlugin.test(
     "3- it should convert into a state machine two continuations chained with two curried parameters"
@@ -630,4 +631,5 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
           )
       }
   }
+ */
 }

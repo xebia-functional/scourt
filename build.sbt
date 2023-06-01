@@ -1,7 +1,7 @@
 import Dependencies.Compile._
 import Dependencies.Test._
 
-val scalaV = "3.2.0"
+val scalaV = "3.3.0"
 
 ThisBuild / scalaVersion := scalaV
 ThisBuild / organization := "com.47deg"

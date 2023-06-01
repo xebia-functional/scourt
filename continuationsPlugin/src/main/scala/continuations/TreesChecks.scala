@@ -1,6 +1,6 @@
 package continuations
 
-import dotty.tools.dotc.ast.Trees.{Tree => TTree}
+import dotty.tools.dotc.ast.Trees.{Tree => TTree, Untyped}
 import dotty.tools.dotc.ast.tpd.*
 import dotty.tools.dotc.core.Contexts.Context
 
@@ -42,7 +42,8 @@ trait TreesChecks extends Trees {
    * @return
    *   True if the tree calls the method [[continuations.Continuation.resume]]
    */
-  private[continuations] def treeCallsResume[A](tree: TTree[A])(using Context): Boolean =
+  private[continuations] def treeCallsResume[A <: Untyped](tree: TTree[A])(
+      using Context): Boolean =
     tree.denot.matches(continuationResumeMethod.symbol)
 
   private[continuations] def valDefTreeCallsSuspend(tree: Tree)(using Context): Boolean =
