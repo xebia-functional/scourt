@@ -1,7 +1,9 @@
 import Dependencies.Compile._
 import Dependencies.Test._
 
-ThisBuild / scalaVersion := "3.1.2"
+val scalaV = "3.2.0"
+
+ThisBuild / scalaVersion := scalaV
 ThisBuild / organization := "com.47deg"
 ThisBuild / versionScheme := Some("early-semver")
 
@@ -93,7 +95,7 @@ lazy val continuationsPluginSettings: Seq[Def.Setting[_]] =
     publish / skip := true,
     Test / fork := true,
     libraryDependencies ++= List(
-      "org.scala-lang" %% "scala3-compiler" % "3.1.2"
+      "org.scala-lang" %% "scala3-compiler" % scalaV
     ) ++ testAndIntegrationTest(munit),
     Test / javaOptions += {
       val `scala-compiler-classpath` =
