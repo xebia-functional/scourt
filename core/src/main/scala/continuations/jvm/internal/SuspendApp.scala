@@ -34,10 +34,15 @@ object SuspendApp:
         override def run(): Unit =
           val baseCont = BuildContinuation[Any](
             pool,
-            { res =>
-              result = res
+            { err =>
+              result = Left(err)
               latch.countDown()
-            })
+            },
+            { res =>
+              result = Right(res)
+              latch.countDown()
+            }
+          )
           block.startContinuation(baseCont)
     }
     latch.await()

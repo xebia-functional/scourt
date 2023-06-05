@@ -20,17 +20,14 @@ object Continuation:
   type Result = Either[Throwable, Any | Null | State.Suspended.type]
 
   def checkResult(result: Result): Unit =
-    result match {
-      case null => ()
-      case Left(ex) => throw ex
-      case Right(_) => ()
-    }
+    if (result ne null) result.void
 
 end Continuation
 
 inline def BuildContinuation[T](
     ec: ExecutionContext,
-    res: Either[Throwable, T] => Unit): Continuation[T] =
+    onRaise: Throwable => Unit,
+    onResume: T => Unit): Continuation[T] =
   new Continuation[T]:
     override type Ctx = EmptyTuple
     override val executionContext: ExecutionContext = ec
@@ -39,12 +36,12 @@ inline def BuildContinuation[T](
 
     override def resume(value: T): Unit = ec.execute {
       new Runnable:
-        override def run(): Unit = res(Right(value))
+        override def run(): Unit = onResume(value)
     }
 
     override def raise(error: Throwable): Unit = ec.execute {
       new Runnable:
-        override def run(): Unit = res(Left(error))
+        override def run(): Unit = onRaise(error)
     }
 
     private val ec = ExecutionContext.global
