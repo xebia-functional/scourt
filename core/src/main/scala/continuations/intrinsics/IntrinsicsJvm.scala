@@ -1,8 +1,9 @@
 package continuations.intrinsics
 
+import continuations.{rethrow, void}
 import continuations.jvm.internal.{BaseContinuationImpl, ContinuationImpl, Starter}
 import continuations.{Continuation, RestrictedContinuation, Suspend}
-
+import continuations.Continuation.State.*
 import scala.concurrent.ExecutionContext
 
 extension [A](continuation: Continuation[A])
@@ -24,21 +25,14 @@ extension [A](suspendedFn: Starter ?=> A)
     createContinuation(completion).intercepted(completion.executionContext).resume(())
 
   inline def startContinuationOrSuspend(
-      completion: Continuation[A]): Any | Null | Continuation.State.Suspended.type =
-    suspendedFn
-      .asInstanceOf[Continuation[A] => (Any | Null | Continuation.State.Suspended.type)](
-        completion)
+      completion: Continuation[A]): Any | Null | Suspended.type =
+    suspendedFn.asInstanceOf[Continuation[A] => (Any | Null | Suspended.type)](completion)
 
   def createContinuation(completion: Continuation[A]): Continuation[Unit] =
-    if (suspendedFn.isInstanceOf[BaseContinuationImpl])
-      suspendedFn.asInstanceOf[BaseContinuationImpl].create(completion)
-    else
-      createContinuationFromSuspendFunction(
-        completion,
-        (continuation: Continuation[A]) => {
-          suspendedFn.asInstanceOf[Starter].invoke(continuation)
-        }
-      )
+    suspendedFn match
+      case base: BaseContinuationImpl => base.create(completion)
+      case star: Starter => createContinuationFromSuspendFunction(completion, star.invoke)
+      case _ => throw new IllegalStateException("Suspended Fn is neither Base nor Starter")
 
 private inline def createContinuationFromSuspendFunction[T](
     completion: Continuation[T],
@@ -49,50 +43,39 @@ private inline def createContinuationFromSuspendFunction[T](
     new RestrictedContinuation(completion.asInstanceOf) {
       private var label = 0
 
-      override protected def invokeSuspend(result: Either[Throwable, Any | Null])
-          : Any | Null | Continuation.State.Suspended.type =
+      override protected def invokeSuspend(
+          result: Either[Throwable, Any | Null]): Any | Null | Suspended.type =
         label match
           case 0 =>
             label = 1
-            result match
-              case Left(exception) =>
-                throw exception
-              case _ => ()
+            result.void
             block(this)
-
           case 1 =>
             label = 2
-            result match
-              case Left(exception) =>
-                throw exception
-              case Right(result) =>
-                result
+            result.rethrow
           case _ => throw new IllegalStateException("already completed")
 
     }
   else
-    new ContinuationImpl(completion.asInstanceOf, context) {
-      private var label = 0
+    new UnrestrictedContinuationImpl(completion, block)
 
-      override def invokeSuspend(
-          result: Either[Throwable, Any | Null | Continuation.State.Suspended.type])
-          : Any | Null | Continuation.State.Suspended.type =
-        label match
-          case 0 =>
-            label = 1
-            result match
-              case Left(exception) =>
-                throw exception
-              case _ => ()
-            block(this)
+class UnrestrictedContinuationImpl[T](
+    completion: Continuation[T],
+    block: Continuation[T] => T | Any | Null
+) extends ContinuationImpl(completion.asInstanceOf, completion.context),
+      Continuation[Unit] {
+  private var label = 0
 
-          case 1 =>
-            label = 2
-            result match
-              case Left(exception) =>
-                throw exception
-              case Right(result) =>
-                result
-          case _ => throw new IllegalStateException("already completed")
+  override def invokeSuspend(
+      result: Either[Throwable, Any | Null | Suspended.type]): Any | Null | Suspended.type =
+    label match
+      case 0 =>
+        label = 1
+        result.void
+        block(this)
+      case 1 =>
+        label = 2
+        result.rethrow
+      case _ => throw new IllegalStateException("already completed")
 
-    }
+}

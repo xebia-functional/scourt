@@ -1,7 +1,9 @@
 package continuations.jvm.internal
 
 import continuations.{Continuation, ContinuationInterceptor}
+import Continuation.State.*
 
+import scala.annotation.tailrec
 import scala.concurrent.ExecutionContext
 
 abstract class BaseContinuationImpl(
@@ -16,32 +18,32 @@ abstract class BaseContinuationImpl(
   final override def resume(result: Any | Null): Unit = resumeAux(Right(result))
   final override def raise(error: Throwable): Unit = resumeAux(Left(error))
 
-  private def resumeAux(result: Either[Throwable, Any | Null]): Unit = {
-    var current = this
-    var param = result
-    while true do
-      if (completion == null) throw RuntimeException("resume called with no completion")
-      val outcome: Either[Throwable, Any | Null] =
-        try
-          val outcome = current.invokeSuspend(param)
-          if (outcome == Continuation.State.Suspended) return
-          Right(outcome)
-        catch
-          case exception: Throwable =>
-            Left(exception)
+  private def resumeAux(result: Either[Throwable, Any | Null]): Unit =
+    if (completion == null) throw RuntimeException("resume called with no completion")
+    else {
+      @tailrec
+      def go(current: BaseContinuationImpl, param: Either[Throwable, Any | Null]): Unit = {
+        val outcome: Either[Throwable, Any | Null] =
+          try
+            current.invokeSuspend(param) match {
+              case Suspended => return
+              case o => Right(o)
+            }
+          catch case exception: Throwable => Left(exception)
 
-      releaseIntercepted()
-      completion match
-        case base: BaseContinuationImpl =>
-          current = base
-          param = outcome
-        case _ =>
-          completion.resume(outcome)
-          return
-  }
+        releaseIntercepted()
+        completion match
+          case base: BaseContinuationImpl =>
+            go(base, outcome)
+          case _ =>
+            outcome.fold(completion.raise, completion.resume)
+      }
 
-  protected def invokeSuspend(
-      result: Either[Throwable, Any | Null | Continuation.State.Suspended.type]): Any | Null
+      go(this, result)
+    }
+
+  protected def invokeSuspend(result: Either[Throwable, Any | Null | Suspended.type]): Any |
+    Null
 
   protected def releaseIntercepted(): Unit = ()
 
