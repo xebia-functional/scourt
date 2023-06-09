@@ -1,4 +1,6 @@
-# unwrapped
+# scourt - Coroutines for Scala
+
+Scourt is a Scala-3 compiler plugin that implements a form of coroutines for Scala.
 
 ## BUILD NOTICE
 
@@ -47,3 +49,9 @@ env JAVA_OPTS='--enable-preview --add-modules jdk.incubator.concurrent' sbt "cle
 
 **NOTE**: The Loom project is defined as an incubator module that is a means to distribute APIs which are not final or completed to get feedback from the developers.
 You should include the `-add-module` Java option to add the module to the class path of the project.
+
+### References for Design and Implementation
+
+
+
+
