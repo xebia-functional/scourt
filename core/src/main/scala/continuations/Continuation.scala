@@ -1,7 +1,5 @@
 package continuations
 
-import continuations.jvm.internal.BaseContinuationImpl
-
 import scala.concurrent.ExecutionContext
 
 trait Continuation[-A]:

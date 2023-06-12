@@ -1,6 +1,5 @@
-package continuations.jvm.internal
+package continuations
 
-import continuations.{Continuation, ContinuationInterceptor}
 import Continuation.State.*
 
 import scala.annotation.tailrec
