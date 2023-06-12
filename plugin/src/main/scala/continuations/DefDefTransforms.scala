@@ -619,6 +619,17 @@ object DefDefTransforms extends TreesChecks:
         List(continuationClassRef.appliedTo(anyOrNullType))
       ).entered.asTerm
 
+      val updatedParams =
+        symbol
+          .paramSymss
+          .map(_.map { s =>
+            val ss = s.asTerm.copy(flags = Flags.LocalParamAccessor)
+            frameClassSymbol.enter(ss)
+            ss
+          })
+
+      symbol.setParamss(updatedParams)
+
       tpd.DefDef(symbol)
     }
 
