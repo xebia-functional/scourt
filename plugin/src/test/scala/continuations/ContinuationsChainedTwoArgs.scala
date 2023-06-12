@@ -124,7 +124,6 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
       assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedExtraGivenParam"))
   }
 
-  /*
   compilerContextWithContinuationsPlugin.test(
     "5- it should convert context function into a state machine two continuations chained with " +
       "one extra given parameter"
@@ -432,7 +431,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
         loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneValAfter")
       assertCompilesTo(source)(expected)
   }
-*/
+
   compilerContextWithContinuationsPlugin.test(
     "19- it should convert into a state machine two continuations chained with two val prior" +
       "to continuations, two val between and 2 lines after"

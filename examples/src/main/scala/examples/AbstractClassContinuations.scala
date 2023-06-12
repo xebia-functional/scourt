@@ -31,8 +31,8 @@ abstract class ExampleClass1:
   def continuations(x: Int, y: Int)(using s: Suspend): Int =
     val q = p
     val r =
-      summon[Suspend].suspendContinuation[Int](
-        _.resume(Right(x + q + ExampleClass1.p + method1(y) + method2(y) + qq)))
+      summon[Suspend].shift[Int](
+        _.resume(x + q + ExampleClass1.p + method1(y) + method2(y) + qq))
     r + y + ExampleClass1.p + q + method1(x) + method2(y) + qq
 
 object ExampleClass1:
@@ -49,8 +49,8 @@ abstract class ExampleClass2(i: String):
   def continuations(x: Int, y: Int)(using s: Suspend): Int =
     val q = p
     val r =
-      summon[Suspend].suspendContinuation[Int](
-        _.resume(Right(x + q + i.length + ExampleClass2.p + method1(y) + method2(y) + qq)))
+      summon[Suspend].shift[Int](
+        _.resume(x + q + i.length + ExampleClass2.p + method1(y) + method2(y) + qq))
     r + y + ExampleClass2.p + q + method1(x) + i.length + method2(y) + qq
 
 object ExampleClass2:
@@ -67,7 +67,7 @@ abstract class ExampleClass3(i: String):
 
   def continuations(x: Int, y: Int)(using s: Suspend): Int // =
 //    1
-//    summon[Suspend].suspendContinuation[Int](_.resume(Right(1)))
+//    summon[Suspend].shift[Int](_.resume(1))
 
 object ExampleClass3:
   val p = 1
@@ -80,8 +80,8 @@ class ExampleClass3Impl(i: String) extends ExampleClass3(i) {
   override def continuations(x: Int, y: Int)(using s: Suspend): Int =
     val q = p
     val r =
-      summon[Suspend].suspendContinuation[Int](
-        _.resume(Right(x + q + i.length + ExampleClass3.p + method1(y) + method2(y) + qq)))
+      summon[Suspend].shift[Int](
+        _.resume(x + q + i.length + ExampleClass3.p + method1(y) + method2(y) + qq))
     r + y + ExampleClass3.p + q + method1(x) + i.length + method2(y) + qq
 }
 
@@ -93,7 +93,7 @@ abstract class ExampleClass4:
     def method2(x: Int) = x + 1
     val z2 = 1
 
-    val suspension1 = s.suspendContinuation[Int] { continuation =>
+    val suspension1 = s.shift[Int] { continuation =>
       def method3(x: Int) = x
       val z3 = 1
 
@@ -101,18 +101,16 @@ abstract class ExampleClass4:
         val z4 = 1
         def method4(x: Int) = x
 
-        Right(method1(x) + 1 + z1 + z2 + method2(y) + z3 + method3(x) + z4 + method4(x))
+        method1(x) + 1 + z1 + z2 + method2(y) + z3 + method3(x) + z4 + method4(x)
       }
     }
 
-    s.suspendContinuation[Int] { continuation => continuation.resume(Right(method1(x) + 1)) }
+    s.shift[Int](_.resume(method1(x) + 1))
 
     val z5 = suspension1
     def method5(x: Int) = x + 1
 
-    val suspension2 = s.suspendContinuation[Int] { continuation =>
-      continuation.resume(Right(z5 + suspension1 + method5(y)))
-    }
+    val suspension2 = s.shift[Int](_.resume(z5 + suspension1 + method5(y)))
 
     val z6 = 1
     def method6(x: Int) = x + 1

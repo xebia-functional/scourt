@@ -166,7 +166,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       // format: on
       assertCompilesTo(source)(expected)
   }
-   
+
   compilerContextWithContinuationsPlugin.test(
     "It should convert a suspended def with a single constant and a non suspended body to CPS"
   ) {
