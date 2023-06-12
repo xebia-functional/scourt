@@ -14,6 +14,9 @@ import dotty.tools.dotc.core.Types.*
 import munit.FunSuite
 
 class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachineFixtures {
+  val expectedStateMachineTwoContinuationsChained =
+    loadFile("StateMachineTwoContinuationsChained")
+
   compilerContextWithContinuationsPlugin.test(
     "it should convert into a state machine two continuations chained"
   ) {
@@ -23,8 +26,8 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |package continuations
            |
            |def fooTest(x: Int, y: Int)(using s: Suspend): Int = {
-           |    val z = s.shift[Int] { _.resume(x + y + 1) }
-           |    s.shift[Int] { _.resume(z + 1) }
+           |    val z = s.shift[Int](_.resume(x + y + 1))
+           |    s.shift[Int](_.resume(z + 1))
            |}
            |""".stripMargin
 
@@ -60,11 +63,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
           |}
           |""".stripMargin
 
+      val expect = loadFile("StateMachineTwoContinuationsChainedOneGenericParam")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChainedOneGenericParam)
+            removeLineTrailingSpaces(expect)
           )
       }
   }
@@ -93,12 +98,12 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
           |}
           |""".stripMargin
 
+      val expect = loadFile("StateMachineTwoContinuationsChainedTwoGenericParams")
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoGenericParams)
+            removeLineTrailingSpaces(expect)
           )
       }
   }
@@ -112,8 +117,8 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |package continuations
            |
            |def fooTest(x: Int)(y: Int)(using s: Suspend): Int = {
-           |    val z = s.shift[Int] { _.resume( { x + y + 1 }) }
-           |    s.shift[Int] { _.resume( { z + 1 }) }
+           |    val z = s.shift[Int](_.resume(x + y + 1))
+           |    s.shift[Int](_.resume(z + 1))
            |}
            |""".stripMargin
 
@@ -143,11 +148,12 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedExtraGivenParam")
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChainedExtraGivenParam)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -170,12 +176,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected =
+        loadFile("StateMachineContextFunctionTwoContinuationsChainedExtraGivenParam")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineContextFunctionTwoContinuationsChainedExtraGivenParam)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -194,11 +202,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expect = loadFile("StateMachineContextFunctionTwoContinuationsChained")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineContextFunctionTwoContinuationsChained)
+            removeLineTrailingSpaces(expect)
           )
       }
   }
@@ -219,11 +229,12 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expect = loadFile("StateMachineTwoContinuationsChainedOneLinePrior")
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChainedOneLinePrior)
+            removeLineTrailingSpaces(expect)
           )
       }
   }
@@ -244,11 +255,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expect = loadFile("StateMachineTwoContinuationsChainedOneValPrior")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChainedOneValPrior)
+            removeLineTrailingSpaces(expect)
           )
       }
   }
@@ -270,11 +283,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedTwoLinesPrior")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChainedTwoLinesPrior)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -296,12 +311,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedTwoLinesOneValPrior")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoLinesOneValPrior)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -327,7 +343,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChainedTwoValPrior)
+            removeLineTrailingSpaces(loadFile("StateMachineTwoContinuationsChainedTwoValPrior"))
           )
       }
   }
@@ -350,12 +366,12 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorOneLineBetween")
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorOneLineBetween)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -378,12 +394,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorOneValBetween")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorOneValBetween)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -407,12 +424,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoLinesBetween")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoLinesBetween)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -436,12 +454,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected =
+        loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoLinesOneValBetween")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoLinesOneValBetween)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -465,12 +485,13 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetween")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoValBetween)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -495,12 +516,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected =
+        loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneLineAfter")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneLineAfter)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -526,12 +549,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected =
+        loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneValAfter")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneValAfter)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -557,12 +582,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected =
+        loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoLinesAfter")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoLinesAfter)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -589,12 +616,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected =
+        loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoValAfter")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoValAfter)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
@@ -621,12 +650,14 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
+      val expected = loadFile(
+        "StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoValAfterChainIgnored")
+
       checkContinuations(source) {
         case (tree, _) =>
           assertNoDiff(
             removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              expectedStateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoValAfterChainIgnored)
+            removeLineTrailingSpaces(expected)
           )
       }
   }
