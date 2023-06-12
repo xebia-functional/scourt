@@ -567,8 +567,7 @@ object DefDefTransforms extends TreesChecks:
     val continuationModule = requiredModule(continuationFullName)
     val safeContinuationClass = requiredClass("continuations.SafeContinuation")
     val continuationImplClass = requiredClass("continuations.ContinuationImpl")
-    val baseContinuationImplClassRef = requiredClassRef(
-      "continuations.BaseContinuationImpl")
+    val baseContinuationImplClassRef = requiredClassRef("continuations.BaseContinuationImpl")
 
     val parent = tree.symbol
     val treeOwner = parent.owner
