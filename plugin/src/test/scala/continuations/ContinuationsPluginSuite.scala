@@ -37,13 +37,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expectedOutput =
         """package <empty> {
           |  import continuations.*
-          |  final lazy module val compileFromStringpackage:
-          |    compileFromStringpackage = new compileFromStringpackage()
-          |  @SourceFile("compileFromStringscala") final module class
-          |    compileFromStringpackage() extends Object() {
-          |    this: compileFromStringpackage.type =>
+          |  final lazy module val compileFromString$package:
+          |    compileFromString$package
+          |   = new compileFromString$package()
+          |  @SourceFile("compileFromString.scala") final module class
+          |    compileFromString$package
+          |  () extends Object() { this: compileFromString$package.type =>
           |    private def writeReplace(): AnyRef =
-          |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
+          |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
           |    def program: Unit =
           |      {
           |        def foo(completion: continuations.Continuation[Int | Any]): Any = 1
@@ -74,13 +75,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expectedOutput =
         """|package <empty> {
            |  import continuations.*
-           |  final lazy module val compileFromStringpackage:
-           |    compileFromStringpackage = new compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: compileFromStringpackage.type =>
+           |  final lazy module val compileFromString$package:
+           |    compileFromString$package
+           |   = new compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class
+           |    compileFromString$package
+           |  () extends Object() { this: compileFromString$package.type =>
            |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
+           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
            |    def program: Unit =
            |      {
            |        def foo(completion: continuations.Continuation[Int | Any]): Any = 1
@@ -100,7 +102,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val source = """|class A""".stripMargin
       // format: off
       val expected = """|package <empty> {
-        |  @SourceFile("compileFromStringscala") class A() extends Object() {}
+        |  @SourceFile("compileFromString.scala") class A() extends Object() {}
         |}
         |""".stripMargin
       // format: on
@@ -112,7 +114,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
     case given Context =>
       val source = """|class A""".stripMargin
       val expected = """|package <empty> {
-                        |  @SourceFile("compileFromStringscala") class S() extends Object() {}
+                        |  @SourceFile("compileFromString.scala") class B() extends Object() {}
                         |}""".stripMargin
       assertCompilesTo(source)(expected)
   }
@@ -149,13 +151,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|package <empty> {
            |  import continuations.*
-           |  final lazy module val compileFromStringpackage: 
-           |    compileFromStringpackage = new compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() { 
-           |    this: compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
+           |  final lazy module val compileFromString$package: 
+           |    compileFromString$package
+           |   = new compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
            |    def foo(x: Int, completion: continuations.Continuation[Int | Any]): Any = x.+(1)
            |  }
            |}
@@ -179,13 +182,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|package <empty> {
            |  import continuations.*
-           |  final lazy module val compileFromStringpackage:
-           |    compileFromStringpackage = new compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
+           |  final lazy module val compileFromString$package: 
+           |    compileFromString$package
+           |   = new compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
            |    def foo(x: Int, completion: continuations.Continuation[Int | Any]): Any = x.+(1)
            |  }
            |}
@@ -212,13 +216,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
         """|package <empty> {
            |  import continuations.*
            |  import scala.concurrent.ExecutionContext
-           |  final lazy module val compileFromStringpackage:
-           |    compileFromStringpackage = new compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
+           |  final lazy module val compileFromString$package: 
+           |    compileFromString$package
+           |   = new compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
            |    def foo(x: Int, z: String*, ec: concurrent.ExecutionContext, completion: continuations.Continuation[Int | Any]): Any = x.+(1)
            |  }
            |}
@@ -330,15 +335,15 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val continuation1: continuations.Continuation[Int] = completion
            |        val safeContinuation: continuations.SafeContinuation[Int] = continuations.SafeContinuation.init[Int](continuation1)
@@ -380,15 +385,15 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val continuation1: continuations.Continuation[Int] = completion
            |        val safeContinuation: continuations.SafeContinuation[Int] = continuations.SafeContinuation.init[Int](continuation1)
@@ -435,15 +440,15 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val continuation1: continuations.Continuation[Int] = completion
            |        val safeContinuation: continuations.SafeContinuation[Int] = continuations.SafeContinuation.init[Int](continuation1)
@@ -515,15 +520,15 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val x: Int = 5
            |        println("HI")
@@ -560,15 +565,15 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val continuation1: continuations.Continuation[Int] = completion
            |        val safeContinuation: continuations.SafeContinuation[Int] = continuations.SafeContinuation.init[Int](continuation1)
@@ -604,15 +609,15 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(x: Int, completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(x: Int, completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val continuation1: continuations.Continuation[Int] = completion
            |        val safeContinuation: continuations.SafeContinuation[Int] = continuations.SafeContinuation.init[Int](continuation1)
@@ -717,23 +722,23 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|
            |package continuations {
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: continuations.compileFromStringpackage.type =>
-           |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
-           |    def foo(x: Int, completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type =
+           |  final lazy module val compileFromString$package: 
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class 
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
+           |    private def writeReplace(): AnyRef = 
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
+           |    def foo(x: Int, completion: continuations.Continuation[Int]): Any | Null | continuations.Continuation.State.Suspended.type = 
            |      {
            |        val y: Int = 5
            |        println("HI")
-           |        if x.<(y) then
+           |        if x.<(y) then 
            |          {
            |            x
            |          }
-           |         else
+           |         else 
            |          {
            |            {
            |              val continuation1: continuations.Continuation[Int] = completion
@@ -984,14 +989,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  import continuations.jvm.internal.SuspendApp
            |  import scala.concurrent.ExecutionContext
            |  import concurrent.ExecutionContext.Implicits.global
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() { 
-           |    this: continuations.compileFromStringpackage.type =>
+           |  final lazy module val compileFromString$package:
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
            |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
            |    def program: Any =
            |      {
            |        def foo(x: A, y: B, z: String, ec: concurrent.ExecutionContext, completion: continuations.Continuation[A | Any]): Any = x
@@ -1015,18 +1020,19 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  import continuations.jvm.internal.SuspendApp
            |  import scala.concurrent.ExecutionContext
            |  import concurrent.ExecutionContext.Implicits.global
-           |  final lazy module val compileFromStringpackage:
-           |    continuations.compileFromStringpackage =
-           |    new continuations.compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() { 
-           |    this: continuations.compileFromStringpackage.type =>
+           |  final lazy module val compileFromString$package:
+           |    continuations.compileFromString$package
+           |   = new continuations.compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class
+           |    compileFromString$package
+           |  () extends Object() { this: continuations.compileFromString$package.type =>
            |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
+           |      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
            |    def program: Any =
            |      {
            |        def foo(x: A, y: B, z: String, ec: concurrent.ExecutionContext, completion: continuations.Continuation[A]):
-           |          Any | Null | continuations.Continuation.State.Suspended.type =
+           |          Any | Null | continuations.Continuation.State.Suspended.type
+           |         =
            |          {
            |            val continuation1: continuations.Continuation[A] = completion
            |            val safeContinuation: continuations.SafeContinuation[A] = continuations.SafeContinuation.init[A](continuation1)
@@ -1315,13 +1321,14 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|package <empty> {
            |  import continuations.*
-           |  final lazy module val compileFromStringpackage:
-           |    compileFromStringpackage = new compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() { 
-           |    this: compileFromStringpackage.type =>
+           |  final lazy module val compileFromString$package:
+           |    compileFromString$package
+           |   = new compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class
+           |    compileFromString$package
+           |  () extends Object() { this: compileFromString$package.type =>
            |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
+           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
            |    def foo(completion: continuations.Continuation[(Int => Int) | Any]): Int => Any =
            |      {
            |        def $anonfun(x: Int): Any = x.+(1)
@@ -1349,19 +1356,20 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         """|package <empty> {
            |  import continuations.*
-           |  final lazy module val compileFromStringpackage:
-           |    compileFromStringpackage = new compileFromStringpackage()
-           |  @SourceFile("compileFromStringscala") final module class
-           |    compileFromStringpackage() extends Object() {
-           |    this: compileFromStringpackage.type =>
+           |  final lazy module val compileFromString$package:
+           |    compileFromString$package
+           |   = new compileFromString$package()
+           |  @SourceFile("compileFromString.scala") final module class
+           |    compileFromString$package
+           |  () extends Object() { this: compileFromString$package.type =>
            |    private def writeReplace(): AnyRef =
-           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromStringpackage.type])
-           |    def foo(completion: continuations.Continuation[([A] => (x$1: List[A]) => Int) | Any]): [A] => (x$1: List[A]) => Any =
+           |      new scala.runtime.ModuleSerializationProxy(classOf[compileFromString$package.type])
+           |    def foo(completion: continuations.Continuation[([A] => (List[A]) => Int) | Any]): [A] => (List[A]) => Any =
            |      {
            |        final class $anon() extends Object(), PolyFunction {
            |          def apply[A >: Nothing <: Any](list: List[A]): Int = list.size
            |        }
-           |        new $anon():([A] => (list: List[A]) => Int)
+           |        new $anon():([A] => (List[A]) => Int)
            |      }
            |  }
            |}
