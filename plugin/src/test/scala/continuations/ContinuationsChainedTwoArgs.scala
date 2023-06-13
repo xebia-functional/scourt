@@ -31,13 +31,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChained)
-          )
-      }
+      assertCompilesTo(source)(expectedStateMachineTwoContinuationsChained)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -63,15 +57,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
           |}
           |""".stripMargin
 
-      val expect = loadFile("StateMachineTwoContinuationsChainedOneGenericParam")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedOneGenericParam"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -98,14 +84,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
           |}
           |""".stripMargin
 
-      val expect = loadFile("StateMachineTwoContinuationsChainedTwoGenericParams")
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedTwoGenericParams"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -122,13 +101,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedStateMachineTwoContinuationsChained)
-          )
-      }
+      assertCompilesTo(source)(expectedStateMachineTwoContinuationsChained)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -148,14 +121,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      val expected = loadFile("StateMachineTwoContinuationsChainedExtraGivenParam")
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedExtraGivenParam"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -179,13 +145,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
       val expected =
         loadFile("StateMachineContextFunctionTwoContinuationsChainedExtraGivenParam")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -202,15 +162,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      val expect = loadFile("StateMachineContextFunctionTwoContinuationsChained")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineContextFunctionTwoContinuationsChained"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -229,14 +181,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      val expect = loadFile("StateMachineTwoContinuationsChainedOneLinePrior")
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedOneLinePrior"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -255,15 +200,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      val expect = loadFile("StateMachineTwoContinuationsChainedOneValPrior")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedOneValPrior"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -285,13 +222,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
 
       val expected = loadFile("StateMachineTwoContinuationsChainedTwoLinesPrior")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -312,14 +243,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |""".stripMargin
 
       val expected = loadFile("StateMachineTwoContinuationsChainedTwoLinesOneValPrior")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -339,13 +263,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(loadFile("StateMachineTwoContinuationsChainedTwoValPrior"))
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineTwoContinuationsChainedTwoValPrior"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -367,13 +285,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |""".stripMargin
 
       val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorOneLineBetween")
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -395,14 +307,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |""".stripMargin
 
       val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorOneValBetween")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -425,14 +330,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |""".stripMargin
 
       val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoLinesBetween")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -457,13 +355,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
       val expected =
         loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoLinesOneValBetween")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -486,14 +378,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
            |""".stripMargin
 
       val expected = loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetween")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -518,14 +403,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
 
       val expected =
         loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneLineAfter")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -551,14 +429,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
 
       val expected =
         loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenOneValAfter")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -584,14 +455,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
 
       val expected =
         loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoLinesAfter")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -619,13 +483,7 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
       val expected =
         loadFile("StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoValAfter")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -653,12 +511,6 @@ class ContinuationsChainedTwoArgs extends FunSuite, CompilerFixtures, StateMachi
       val expected = loadFile(
         "StateMachineTwoContinuationsChainedTwoValPriorTwoValBetweenTwoValAfterChainIgnored")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 }

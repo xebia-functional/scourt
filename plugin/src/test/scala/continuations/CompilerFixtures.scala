@@ -779,10 +779,18 @@ trait CompilerFixtures { self: FunSuite =>
     run.runContext
   }
 
+  def assertCompilesTo(source: String)(expected: String)(using Context): Context =
+    checkContinuations(source) {
+      case (tree, _) =>
+        assertNoDiff(
+          removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
+          removeLineTrailingSpaces(expected)
+        )
+    }
+
   def checkContinuations(source: String)(assertion: (Tree, Context) => Unit)(
-      using Context): Context = {
+      using Context): Context =
     checkCompile("pickleQuotes", source)(assertion)
-  }
 
   def checkTypes(source: String, typeStrings: String*)(
       assertion: (List[Type], Context) => Unit)(using Context): Unit =
