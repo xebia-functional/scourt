@@ -1,7 +1,8 @@
 package continuations {
   import continuations.jvm.internal.SuspendApp
-  @SourceFile("compileFromStringscala") case class Foo(x: Int) extends Object(), _root_.scala.Product, _root_.
-    scala.Serializable {
+  @SourceFile("compileFromString.scala") case class Foo(x: Int) extends Object(), _root_.scala.Product, _root_.
+    scala
+  .Serializable {
     override def hashCode(): Int =
       {
         var acc: Int = -889275714
@@ -39,8 +40,9 @@ package continuations {
     def _1: Int = this.x
   }
   final lazy module val Foo: continuations.Foo = new continuations.Foo()
-  @SourceFile("compileFromStringscala") final module class Foo() extends AnyRef(), scala.deriving.Mirror.
-    Product { this: continuations.Foo.type =>
+  @SourceFile("compileFromString.scala") final module class Foo() extends AnyRef(), scala.deriving.Mirror.
+    Product
+   { this: continuations.Foo.type =>
     private def writeReplace(): AnyRef = new scala.runtime.ModuleSerializationProxy(classOf[continuations.Foo.type])
     def apply(x: Int): continuations.Foo = new continuations.Foo(x)
     def unapply(x$1: continuations.Foo): continuations.Foo = x$1
@@ -48,8 +50,9 @@ package continuations {
     type MirroredMonoType = continuations.Foo
     def fromProduct(x$0: Product): continuations.Foo.MirroredMonoType = new continuations.Foo(x$0.productElement(0).$asInstanceOf[Int])
   }
-  @SourceFile("compileFromStringscala") case class Bar(x: Int) extends Object(), _root_.scala.Product, _root_.
-    scala.Serializable {
+  @SourceFile("compileFromString.scala") case class Bar(x: Int) extends Object(), _root_.scala.Product, _root_.
+    scala
+  .Serializable {
     override def hashCode(): Int =
       {
         var acc: Int = -889275714
@@ -87,8 +90,9 @@ package continuations {
     def _1: Int = this.x
   }
   final lazy module val Bar: continuations.Bar = new continuations.Bar()
-  @SourceFile("compileFromStringscala") final module class Bar() extends AnyRef(), scala.deriving.Mirror.
-    Product { this: continuations.Bar.type =>
+  @SourceFile("compileFromString.scala") final module class Bar() extends AnyRef(), scala.deriving.Mirror.
+    Product
+   { this: continuations.Bar.type =>
     private def writeReplace(): AnyRef = new scala.runtime.ModuleSerializationProxy(classOf[continuations.Bar.type])
     def apply(x: Int): continuations.Bar = new continuations.Bar(x)
     def unapply(x$1: continuations.Bar): continuations.Bar = x$1
@@ -96,18 +100,19 @@ package continuations {
     type MirroredMonoType = continuations.Bar
     def fromProduct(x$0: Product): continuations.Bar.MirroredMonoType = new continuations.Bar(x$0.productElement(0).$asInstanceOf[Int])
   }
-  final lazy module val compileFromStringpackage:
-    continuations.compileFromStringpackage = 
-    new continuations.compileFromStringpackage()
-  @SourceFile("compileFromStringscala") final module class
-    compileFromStringpackage() extends Object() { 
-    this: continuations.compileFromStringpackage.type =>
+  final lazy module val compileFromString$package:
+    continuations.compileFromString$package
+   = new continuations.compileFromString$package()
+  @SourceFile("compileFromString.scala") final module class
+    compileFromString$package
+  () extends Object() { this: continuations.compileFromString$package.type =>    
     private def writeReplace(): AnyRef =
-      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
+      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
     def program: Any =
       {
         private class $fooTest$Frame(private[this] val $completion: continuations.Continuation[Any | Null]) extends
-          continuations.jvm.internal.ContinuationImpl($completion, $completion.context) {
+          continuations.jvm.internal.ContinuationImpl
+        ($completion, $completion.context) {
           var I$0: Any = _
           var I$1: Any = _
           var I$2: Any = _
@@ -117,10 +122,12 @@ package continuations {
           var $result: Either[Throwable, Any | Null | continuations.Continuation.State.Suspended.type] = _
           var $label: Int = _
           def $result_=(x$0: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Unit
-             = ()
+             = 
+          ()
           def $label_=(x$0: Int): Unit = ()
           protected override def invokeSuspend(
-            result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Any | Null =
+            result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]
+          ): Any | Null =
             {
               this.$result = result
               this.$label = this.$label.|(scala.Int.MinValue)
@@ -130,7 +137,8 @@ package continuations {
             new continuations.jvm.internal.BaseContinuationImpl(completion)
         }
         def fooTest(a: A, b: B, completion: continuations.Continuation[B]):
-          B | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State) =
+          B | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State) 
+         =
           {
             var a##1: A = a
             var b##1: B = b
