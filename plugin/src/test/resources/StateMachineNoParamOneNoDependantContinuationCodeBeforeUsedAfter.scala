@@ -1,14 +1,15 @@
 package continuations {
-  final lazy module val compileFromStringpackage:
-    continuations.compileFromStringpackage = 
-    new continuations.compileFromStringpackage()
-  @SourceFile("compileFromStringscala") final module class
-    compileFromStringpackage() extends Object() { 
-    this: continuations.compileFromStringpackage.type =>
+  final lazy module val compileFromString$package:
+    continuations.compileFromString$package
+   = new continuations.compileFromString$package()
+  @SourceFile("compileFromString.scala") final module class
+    compileFromString$package
+  () extends Object() { this: continuations.compileFromString$package.type =>
     private def writeReplace(): AnyRef =
-      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
+      new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromString$package.type])
     private class $foo$Frame(private[this] val $completion: continuations.Continuation[Any | Null]) extends 
-      continuations.jvm.internal.ContinuationImpl($completion, $completion.context) {
+      continuations.jvm.internal.ContinuationImpl
+    ($completion, $completion.context) {
       var I$0: Any = _
       def I$0_=(x$0: Any): Unit = ()
       var $result: Either[Throwable, Any | Null | continuations.Continuation.State.Suspended.type] = _
@@ -16,28 +17,31 @@ package continuations {
       def $result_=(x$0: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Unit = ()
       def $label_=(x$0: Int): Unit = ()
       protected override def invokeSuspend(
-        result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]): Any | Null =
+        result: Either[Throwable, Any | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State)]
+      ): Any | Null =
         {
           this.$result = result
           this.$label = this.$label.|(scala.Int.MinValue)
-          continuations.compileFromStringpackage.foo(this)
+          continuations.compileFromString$package.foo(this)
         }
       override def create(value: Any | Null, completion: continuations.Continuation[Any | Null]): continuations.Continuation[Unit] =
         new continuations.jvm.internal.BaseContinuationImpl(completion)
     }
     def foo(completion: continuations.Continuation[Int]):
-      Int | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State) =
+      Int | Null | (continuations.Continuation.State.Suspended : continuations.Continuation.State) 
+     =
       {
         var xx: Int = null
         {
-          val $continuation: continuations.compileFromStringpackage.$foo$Frame =
+          val $continuation: continuations.compileFromString$package.$foo$Frame =
             completion match
               {
-                case x$0 @ x$0:continuations.compileFromStringpackage.$foo$Frame if
-                  x$0.$label.&(scala.Int.MinValue).!=(0) =>
+                case x$0 @ x$0:continuations.compileFromString$package.$foo$Frame if
+                  x$0.$label.&(scala.Int.MinValue).!=(0) 
+                 =>
                   x$0.$label = x$0.$label.-(scala.Int.MinValue)
                   x$0
-                case _ => new continuations.compileFromStringpackage.$foo$Frame(completion)
+                case _ => new continuations.compileFromString$package.$foo$Frame(completion)
               }
           $continuation.$label match
             {

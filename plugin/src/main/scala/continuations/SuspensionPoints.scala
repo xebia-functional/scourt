@@ -18,11 +18,8 @@ object SuspensionPoints extends TreesChecks:
       .shallowFold(List.empty[Tree]) {
         case (suspends, tree) =>
           tree match
-            case vd: ValDef =>
-              vd.forceFields()
-              if (subtreeCallsSuspend(vd) || treeCallsSuspend(tree))
-                tree :: suspends
-              else suspends
+            case vd: ValDef if subtreeCallsSuspend(vd.forceIfLazy) =>
+              tree :: suspends
             case _ if treeCallsSuspend(tree) =>
               tree :: suspends
             case _ =>
