@@ -5,8 +5,8 @@ package continuations {
     private def writeReplace(): AnyRef = new scala.runtime.ModuleSerializationProxy(classOf[continuations.ExampleObject.type])
     private[this] def method1(x: Int): Int = x.+(1)
     protected val z1: Int = 1
-    private class $continuations$Frame($completion: continuations.Continuation[Any | Null]) extends continuations.jvm.internal.ContinuationImpl(
-      $completion, $completion.context) {
+    private class $continuations$Frame(private[this] val $completion: continuations.Continuation[Any | Null]) extends
+      continuations.jvm.internal.ContinuationImpl($completion, $completion.context) {
       var I$0: Any = _
       var I$1: Any = _
       var I$2: Any = _

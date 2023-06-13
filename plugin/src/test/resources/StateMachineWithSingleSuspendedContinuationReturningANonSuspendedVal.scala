@@ -10,8 +10,8 @@ package continuations {
       new scala.runtime.ModuleSerializationProxy(classOf[continuations.compileFromStringpackage.type])
     def program: Any =
       {
-        private class $foo$Frame($completion: continuations.Continuation[Any | Null]) extends continuations.jvm.internal.ContinuationImpl(
-          $completion, $completion.context) {
+        private class $foo$Frame(private[this] val $completion: continuations.Continuation[Any | Null]) extends 
+          continuations.jvm.internal.ContinuationImpl($completion, $completion.context) {
           var I$0: Any = _
           def I$0_=(x$0: Any): Unit = ()
           var $result: Either[Throwable, Any | Null | continuations.Continuation.State.Suspended.type] = _
