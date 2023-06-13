@@ -54,12 +54,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            expectedOutput)
-      }
+      assertCompilesTo(source)(expectedOutput)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -96,12 +91,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            expectedOutput)
-      }
+      assertCompilesTo(source)(expectedOutput)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -114,10 +104,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
         |}
         |""".stripMargin
       // format: on
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -127,10 +114,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected = """|package <empty> {
                         |  @SourceFile("compileFromStringscala") class S() extends Object() {}
                         |}""".stripMargin
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertEquals(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContext.test("debug".ignore) {
@@ -177,13 +161,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
       // format: on
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected))
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -214,10 +192,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -249,11 +224,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
       // format: on
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContext.test("It should run the compiler") {
@@ -299,12 +270,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  summon[Suspend].shift[Int] { continuation => continuation.resume(1) }
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            compileSourceIdentifier.replaceAllIn(tree.show, ""),
-            expectedOneSuspendContinuationTwoBlocks)
-      }
+      assertCompilesTo(source)(expectedOneSuspendContinuationTwoBlocks)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -318,12 +284,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  summon[Suspend].shift[Int](continuation => continuation.resume(1))
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            compileSourceIdentifier.replaceAllIn(tree.show, ""),
-            expectedOneSuspendContinuation)
-      }
+      assertCompilesTo(source)(expectedOneSuspendContinuation)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -337,12 +298,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  summon[Suspend].shift[Int] { _.resume(1) }
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            compileSourceIdentifier.replaceAllIn(tree.show, ""),
-            expectedOneSuspendContinuation)
-      }
+      assertCompilesTo(source)(expectedOneSuspendContinuation)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -356,12 +312,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  summon[Suspend].shift[Int](_.resume(1))
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            compileSourceIdentifier.replaceAllIn(tree.show, ""),
-            expectedOneSuspendContinuation)
-      }
+      assertCompilesTo(source)(expectedOneSuspendContinuation)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -403,10 +354,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -461,10 +409,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -521,10 +466,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -538,12 +480,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  s.shift[Int] { continuation => continuation.resume(1) }
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            compileSourceIdentifier.replaceAllIn(tree.show, ""),
-            expectedOneSuspendContinuationTwoBlocks)
-      }
+      assertCompilesTo(source)(expectedOneSuspendContinuationTwoBlocks)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -557,12 +494,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |  summon[Suspend].shift[Int] { continuation => continuation.resume(1) }
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            compileSourceIdentifier.replaceAllIn(tree.show, ""),
-            expectedOneSuspendContinuationTwoBlocks)
-      }
+      assertCompilesTo(source)(expectedOneSuspendContinuationTwoBlocks)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -610,11 +542,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
       // format: on
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -657,10 +585,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -703,10 +628,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -745,21 +667,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
 
       val expected = loadFile("StateMachineForSuspendContinuationReturningANonSuspendingVal")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
-
-      checkContinuations(sourceContextFunction) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -783,14 +691,8 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
 
       val expected =
         loadFile("StateMachineWithSingleSuspendedContinuationReturningANonSuspendedVal")
+      assertCompilesTo(source)(expected)
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -850,10 +752,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -879,13 +778,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expect =
         loadFile("StateMachineMultipleSuspendedContinuationsReturningANonSuspendingVal")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(expect)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -920,14 +813,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
 
       val expect = loadFile("StateMachineWithMultipleResumeReturningANonSuspendedValue")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(expect)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -978,21 +864,8 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
 
       val expect = loadFile("StateMachineReturningANonSuspendedValue")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
-
-      checkContinuations(sourceContextFunction) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(expect)
+      assertCompilesTo(sourceContextFunction)(expect)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1014,12 +887,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(loadFile("StateMachineNoDependantSuspensions")))
-      }
+      assertCompilesTo(source)(loadFile("StateMachineNoDependantSuspensions"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1047,14 +915,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(
-              loadFile("StateMachineNoDependantSuspensionsWithCodeInside"))
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineNoDependantSuspensionsWithCodeInside"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1079,15 +940,8 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      val expect = loadFile("StateMachineNoDependantSuspensionsWithCodeBetween")
+      assertCompilesTo(source)(loadFile("StateMachineNoDependantSuspensionsWithCodeBetween"))
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1198,19 +1052,8 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
       // format: on
 
-      checkContinuations(sourceNoSuspend) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedNoSuspend))
-      }
-
-      checkContinuations(sourceSuspend) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expectedSuspend))
-      }
+      assertCompilesTo(sourceNoSuspend)(expectedNoSuspend)
+      assertCompilesTo(sourceSuspend)(expectedSuspend)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1226,13 +1069,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(loadFile("StateMachineOneParamOneDependantContinuation"))
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineOneParamOneDependantContinuation"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1249,13 +1086,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(loadFile("StateMachineOneParamOneNoDependantContinuation"))
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineOneParamOneNoDependantContinuation"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1278,13 +1109,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         loadFile("StateMachineNoParamOneNoDependantContinuationCodeBeforeUsedAfter")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1309,13 +1134,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(loadFile("StateMachineManyDependantContinuations"))
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineManyDependantContinuations"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1340,15 +1159,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      val expect = loadFile("StateMachineManyDependantAndNoDependantContinuations")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expect)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineManyDependantAndNoDependantContinuations"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1375,14 +1186,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
 
       val expected = loadFile("StateMachineWithDependantAndNoDependantContinuationAtTheEnd")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1399,13 +1203,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(loadFile("StateMachineForOneChainedContinuation"))
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineForOneChainedContinuation"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1432,13 +1230,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
       val expected =
         loadFile("StateMachineMultipleChainedSuspendContinuationsReturningANonSuspendedVal")
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1457,11 +1249,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      val expected = loadFile("SimpleSuspendedDefWithGenericParam")
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(compileSourceIdentifier.replaceAllIn(tree.show, ""), expected)
-      }
+      assertCompilesTo(source)(loadFile("SimpleSuspendedDefWithGenericParam"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1482,15 +1270,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
 
-      val expected = loadFile("StateMachineChainedSuspendContinuationsOneParameter")
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineChainedSuspendContinuationsOneParameter"))
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1517,13 +1297,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |""".stripMargin
 
       val expected = loadFile("StateMachineChainedSuspendContinuationsOneParameterAndVals")
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected)
-          )
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1557,13 +1331,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
       // format: on
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected))
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1599,13 +1367,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
            |}
            |""".stripMargin
       // format: on
-
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            removeLineTrailingSpaces(expected))
-      }
+      assertCompilesTo(source)(expected)
   }
 
   compilerContextWithContinuationsPlugin.test(
@@ -1655,13 +1417,7 @@ class ContinuationsPluginSuite extends FunSuite, CompilerFixtures, StateMachineF
           | }
           |}""".stripMargin
 
-      checkContinuations(source) {
-        case (tree, _) =>
-          assertNoDiff(
-            removeLineTrailingSpaces(compileSourceIdentifier.replaceAllIn(tree.show, "")),
-            loadFile("StateMachineContinuationsInNonCompanionObject")
-          )
-      }
+      assertCompilesTo(source)(loadFile("StateMachineContinuationsInNonCompanionObject"))
   }
 
 }
